@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navigation from '../components/Navigation';
 import AboutSection from '../components/AboutSection';
 import ResearchSection from '../components/ResearchSection';
@@ -8,12 +9,11 @@ import FacilitiesSection from '../components/FacilitiesSection';
 import TeamSection from '../components/TeamSection';
 import NewsSection from '../components/NewsSection';
 import ContactSection from '../components/ContactSection';
-import LoginModal from '../components/LoginModal';
 import { ThemeProvider } from '../components/ThemeProvider';
 
 const Index = () => {
   const [activeSection, setActiveSection] = useState('about');
-  const [showLogin, setShowLogin] = useState(false);
+  const navigate = useNavigate();
 
   const renderActiveSection = () => {
     switch (activeSection) {
@@ -42,7 +42,7 @@ const Index = () => {
         <Navigation 
           activeSection={activeSection}
           setActiveSection={setActiveSection}
-          onLoginClick={() => setShowLogin(true)}
+          onLoginClick={() => navigate('/auth')}
         />
         
         <main className="pt-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -50,10 +50,6 @@ const Index = () => {
             {renderActiveSection()}
           </div>
         </main>
-
-        {showLogin && (
-          <LoginModal onClose={() => setShowLogin(false)} />
-        )}
       </div>
     </ThemeProvider>
   );
